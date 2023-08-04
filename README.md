@@ -2,7 +2,7 @@
 
 A simple web application to manage products of different brands. It allows users to add new brands, add products to existing brands, edit existing products, and delete products.
 
-![Screenshot]!(image.png)
+
 
 ## Demo
 
