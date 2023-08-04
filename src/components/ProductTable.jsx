@@ -12,8 +12,11 @@ const ProductTable = ({ brands, products, onEditProduct, onDeleteProduct }) => {
   const sortedProducts = (brand) => {
     const productsForBrand = products[brand]
       ?.slice()
-      .sort((a, b) => a.localeCompare(b));
+      ?.sort((a, b) => a.localeCompare(b));
     const searchQuery = searchQueries[brand]?.toLowerCase().trim();
+    if (!productsForBrand) {
+      return [];
+    }
     if (!searchQuery) {
       return productsForBrand;
     }
@@ -29,10 +32,12 @@ const ProductTable = ({ brands, products, onEditProduct, onDeleteProduct }) => {
       [brand]: value,
     }));
   };
-
+  if (!brands || !products) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="product-table-container">
-      <h2>Product Table</h2>
+      <h2>Product List</h2>
       <table className="product-table">
         <tbody>
           <tr>
@@ -61,7 +66,7 @@ const ProductTable = ({ brands, products, onEditProduct, onDeleteProduct }) => {
                           onClick={() =>
                             onEditProduct({ brand, name: productName })
                           }
-                          className="edit"
+                          className="edit-button"
                         >
                           <Pencil size={16} />
                         </button>

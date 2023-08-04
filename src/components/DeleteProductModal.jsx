@@ -3,7 +3,7 @@ import "../App.css";
 
 const DeleteProductModal = ({ isOpen, onClose, product, onDeleteProduct }) => {
   const handleDelete = () => {
-    onDeleteProduct(product.brand, product.name); // Pass brand and name to onDeleteProduct
+    onDeleteProduct(product.brand, product.name);
   };
 
   return (

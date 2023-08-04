@@ -42,23 +42,18 @@ const App = () => {
   // Function to update the product in the state after editing
   const handleUpdateProduct = (brand, updatedProduct) => {
     setProducts((prevProducts) => {
-      // Create a copy of the previous products
       const newProducts = { ...prevProducts };
 
-      // Find the array of products for the given brand
       const productsForBrand = newProducts[brand];
 
-      // Find the index of the product with the same name as the updatedProduct
       const index = productsForBrand.findIndex(
         (product) => product.name === updatedProduct.name
       );
 
-      // If the product exists, update it with the updatedProduct
       if (index !== -1) {
         productsForBrand[index] = updatedProduct;
       }
 
-      // Set the updated products in the state
       return newProducts;
     });
   };
@@ -73,8 +68,6 @@ const App = () => {
   const handleConfirmDeleteProduct = (brand, productName) => {
     const updatedProducts = { ...products };
     if (!updatedProducts[brand]) {
-      // If the products array for the brand doesn't exist, return early or handle the case appropriately.
-      console.error(`No products found for brand "${brand}".`);
       return;
     }
 
@@ -88,10 +81,14 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <h1>Manage Products of Different Brands</h1>
+      <h1 className="page-heading">Manage Products of Different Brands</h1>
       <div className="form-container">
-        <BrandForm onAddBrand={handleAddBrand} existingBrands={brands} />
-        <ProductForm onAddProduct={handleAddProduct} brands={brands} />
+        <div>
+          <ProductForm onAddProduct={handleAddProduct} brands={brands} />
+        </div>
+        <div>
+          <BrandForm onAddBrand={handleAddBrand} existingBrands={brands} />
+        </div>
       </div>
       <ProductTable
         brands={brands}

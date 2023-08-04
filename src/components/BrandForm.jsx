@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "../App.css";
 
 const BrandForm = ({ onAddBrand, existingBrands }) => {
+  // set the state to add new brand
   const [newBrand, setNewBrand] = useState("");
 
   const handleBrandChange = (e) => {
     setNewBrand(e.target.value);
   };
-
+  // handle submit for the add brand button
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newBrand.trim() === "") return;
@@ -21,15 +22,16 @@ const BrandForm = ({ onAddBrand, existingBrands }) => {
 
   return (
     <div className="brand-form-container">
-      <h2>Add a New Brand</h2>
+      <p className="brand-add"> Didn't Found the Desired Brand ?</p>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="brandInput">Enter a new brand:</label>
         <input
           type="text"
           id="brandInput"
           value={newBrand}
           onChange={handleBrandChange}
+          placeholder="Add your brand here"
         />
+
         <button type="submit" disabled={newBrand.trim() === ""}>
           Add Brand
         </button>

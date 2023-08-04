@@ -38,12 +38,13 @@ const ProductForm = ({ onAddProduct, brands }) => {
             </option>
           ))}
         </select>
-        <label htmlFor="productName">Enter Product name:</label>
+
         <input
           type="text"
           id="productName"
           value={productName}
           onChange={handleProductNameChange}
+          placeholder="Enter Product Name"
         />
         <button
           type="submit"
