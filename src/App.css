@@ -117,3 +117,7 @@ ul {
 .modal button.delete svg {
   fill: #dc3545; /* Red color for delete icon */
 }
+.product-table td {
+  height: 100px; /* Set the desired height */
+  vertical-align: top; /* Align cell content to the top */
+}

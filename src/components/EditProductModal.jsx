@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../App.css";
+
 const EditProductModal = ({ isOpen, onClose, product, onUpdateProduct }) => {
-  const [editedProduct, setEditedProduct] = useState(product);
+  const [editedProduct, setEditedProduct] = useState({ ...product });
 
   const handleProductNameChange = (e) => {
     setEditedProduct({ ...editedProduct, name: e.target.value });
@@ -9,7 +10,8 @@ const EditProductModal = ({ isOpen, onClose, product, onUpdateProduct }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateProduct(product.brand, editedProduct);
+    onUpdateProduct(product.brand, editedProduct.name); // Pass brand and name only
+    onClose(); // Close the modal after submitting
   };
 
   return (

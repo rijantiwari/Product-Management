@@ -40,14 +40,27 @@ const App = () => {
   };
 
   // Function to update the product in the state after editing
-  const handleUpdateProduct = (brand, editedProduct) => {
-    const updatedProducts = { ...products };
-    updatedProducts[brand] = updatedProducts[brand].map((product) =>
-      product === editingProduct ? editedProduct : product
-    );
-    setProducts(updatedProducts);
-    setIsEditModalOpen(false);
-    setEditingProduct(null);
+  const handleUpdateProduct = (brand, updatedProduct) => {
+    setProducts((prevProducts) => {
+      // Create a copy of the previous products
+      const newProducts = { ...prevProducts };
+
+      // Find the array of products for the given brand
+      const productsForBrand = newProducts[brand];
+
+      // Find the index of the product with the same name as the updatedProduct
+      const index = productsForBrand.findIndex(
+        (product) => product.name === updatedProduct.name
+      );
+
+      // If the product exists, update it with the updatedProduct
+      if (index !== -1) {
+        productsForBrand[index] = updatedProduct;
+      }
+
+      // Set the updated products in the state
+      return newProducts;
+    });
   };
 
   // Function to open the delete modal and set the product to delete
@@ -57,10 +70,16 @@ const App = () => {
   };
 
   // Function to delete the product from the state
-  const handleConfirmDeleteProduct = (brand) => {
+  const handleConfirmDeleteProduct = (brand, productName) => {
     const updatedProducts = { ...products };
+    if (!updatedProducts[brand]) {
+      // If the products array for the brand doesn't exist, return early or handle the case appropriately.
+      console.error(`No products found for brand "${brand}".`);
+      return;
+    }
+
     updatedProducts[brand] = updatedProducts[brand].filter(
-      (product) => product !== editingProduct.name
+      (product) => product !== productName
     );
     setProducts(updatedProducts);
     setIsDeleteModalOpen(false);

@@ -3,7 +3,7 @@ import "../App.css";
 
 const DeleteProductModal = ({ isOpen, onClose, product, onDeleteProduct }) => {
   const handleDelete = () => {
-    onDeleteProduct(product.brand);
+    onDeleteProduct(product.brand, product.name); // Pass brand and name to onDeleteProduct
   };
 
   return (
@@ -11,11 +11,11 @@ const DeleteProductModal = ({ isOpen, onClose, product, onDeleteProduct }) => {
       <div className="modal-content">
         <h2>Delete Product</h2>
         <p>Are you sure you want to delete {product.name}?</p>
-        <div className="modal-buttons">
-          <button className="confirm-delete-button" onClick={handleDelete}>
+        <div>
+          <button type="button" onClick={handleDelete}>
             Confirm Delete
           </button>
-          <button className="cancel-delete-button" onClick={onClose}>
+          <button type="button" onClick={onClose}>
             Cancel
           </button>
         </div>

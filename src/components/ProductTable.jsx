@@ -1,51 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
+import { Pencil, Trash } from "react-bootstrap-icons";
 
 const ProductTable = ({ brands, products, onEditProduct, onDeleteProduct }) => {
+  // State to hold the search query for each brand
+  const [searchQueries, setSearchQueries] = useState({});
+
+  // Sort the brands alphabetically
+  const sortedBrands = [...brands].sort((a, b) => a.localeCompare(b));
+
+  const sortedProducts = (brand) => {
+    const productsForBrand = products[brand]
+      ?.slice()
+      .sort((a, b) => a.localeCompare(b));
+    const searchQuery = searchQueries[brand]?.toLowerCase().trim();
+    if (!searchQuery) {
+      return productsForBrand;
+    }
+    return productsForBrand.filter((product) =>
+      product.toLowerCase().includes(searchQuery)
+    );
+  };
+
+  const handleSearchChange = (brand, event) => {
+    const { value } = event.target;
+    setSearchQueries((prevQueries) => ({
+      ...prevQueries,
+      [brand]: value,
+    }));
+  };
+
   return (
     <div className="product-table-container">
       <h2>Product Table</h2>
       <table className="product-table">
         <tbody>
           <tr>
-            {brands.map((brand) => (
-              <th key={brand}>{brand}</th>
+            {sortedBrands.map((brand) => (
+              <th key={brand}>
+                {brand}
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQueries[brand] || ""}
+                  onChange={(event) => handleSearchChange(brand, event)}
+                />
+              </th>
             ))}
           </tr>
           <tr>
-            {brands.map((brand) => (
+            {sortedBrands.map((brand) => (
               <td key={brand}>
                 <ul>
-                  {products[brand]?.map((product) => (
-                    <li key={product}>
-                      {product}
+                  {sortedProducts(brand).map((productName, index) => (
+                    <li key={productName}>
+                      <span className="product-number">{index + 1}.</span>{" "}
+                      {productName}
                       <span>
                         <button
                           onClick={() =>
-                            onEditProduct({ brand, name: product })
+                            onEditProduct({ brand, name: productName })
                           }
                           className="edit"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            className="bi bi-pencil"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M13.354 2.646a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.708-.708l10-10a.5.5 0 0 1 .708 0z" />
-                            <path d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" />
-                          </svg>
+                          <Pencil size={16} />
                         </button>
 
                         <button
                           className="delete-button"
                           onClick={() =>
-                            onDeleteProduct({ brand, name: product })
+                            onDeleteProduct({ brand, name: productName })
                           }
                         >
-                          Delete
+                          <Trash size={16} />
                         </button>
                       </span>
                     </li>
