@@ -22,7 +22,7 @@ const ProductForm = ({ onAddProduct, brands }) => {
   };
 
   return (
-    <div>
+    <div className="product-form-container">
       <h2>Add a New Product</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="brandSelect">Select a brand:</label>
@@ -38,21 +38,19 @@ const ProductForm = ({ onAddProduct, brands }) => {
             </option>
           ))}
         </select>
-        <div>
-          <label htmlFor="productName">Enter Product name:</label>
-          <input
-            type="text"
-            id="productName"
-            value={productName}
-            onChange={handleProductNameChange}
-          />
-          <button
-            type="submit"
-            disabled={selectedBrand.trim() === "" || productName.trim() === ""}
-          >
-            Add Product
-          </button>
-        </div>
+        <label htmlFor="productName">Enter Product name:</label>
+        <input
+          type="text"
+          id="productName"
+          value={productName}
+          onChange={handleProductNameChange}
+        />
+        <button
+          type="submit"
+          disabled={selectedBrand.trim() === "" || productName.trim() === ""}
+        >
+          Add Product
+        </button>
       </form>
     </div>
   );

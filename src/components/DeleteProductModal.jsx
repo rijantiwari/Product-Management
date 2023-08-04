@@ -11,11 +11,11 @@ const DeleteProductModal = ({ isOpen, onClose, product, onDeleteProduct }) => {
       <div className="modal-content">
         <h2>Delete Product</h2>
         <p>Are you sure you want to delete {product.name}?</p>
-        <div>
-          <button type="button" onClick={handleDelete}>
+        <div className="modal-buttons">
+          <button className="confirm-delete-button" onClick={handleDelete}>
             Confirm Delete
           </button>
-          <button type="button" onClick={onClose}>
+          <button className="cancel-delete-button" onClick={onClose}>
             Cancel
           </button>
         </div>

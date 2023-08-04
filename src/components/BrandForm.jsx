@@ -15,12 +15,12 @@ const BrandForm = ({ onAddBrand, existingBrands }) => {
       alert("Brand already exists!");
       return;
     }
-    onAddBrand(newBrand); // Fix: Add this line to add the new brand
+    onAddBrand(newBrand);
     setNewBrand("");
   };
 
   return (
-    <div>
+    <div className="brand-form-container">
       <h2>Add a New Brand</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="brandInput">Enter a new brand:</label>

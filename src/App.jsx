@@ -4,6 +4,7 @@ import ProductForm from "./components/ProductForm";
 import ProductTable from "./components/ProductTable";
 import EditProductModal from "./components/EditProductModal";
 import DeleteProductModal from "./components/DeleteProductModal";
+import "./App.css";
 
 const App = () => {
   // State to manage brands and products
@@ -59,7 +60,7 @@ const App = () => {
   const handleConfirmDeleteProduct = (brand) => {
     const updatedProducts = { ...products };
     updatedProducts[brand] = updatedProducts[brand].filter(
-      (product) => product !== editingProduct
+      (product) => product !== editingProduct.name
     );
     setProducts(updatedProducts);
     setIsDeleteModalOpen(false);
@@ -67,10 +68,12 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Manage Products of Different Brands</h1>
-      <BrandForm onAddBrand={handleAddBrand} existingBrands={brands} />
-      <ProductForm onAddProduct={handleAddProduct} brands={brands} />
+      <div className="form-container">
+        <BrandForm onAddBrand={handleAddBrand} existingBrands={brands} />
+        <ProductForm onAddProduct={handleAddProduct} brands={brands} />
+      </div>
       <ProductTable
         brands={brands}
         products={products}
